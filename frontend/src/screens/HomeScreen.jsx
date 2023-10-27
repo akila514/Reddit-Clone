@@ -3,23 +3,16 @@ import { FaUser } from "react-icons/fa";
 
 const HomeScreen = () => {
   return (
-    <div className="flex flex-col md:flex-row text-white px-10 md:px-0 max-w-screen-xl mx-auto mt-10 space-x-2 text-sm">
-      <div className="hidden md:flex w-1/2  flex-col text-lg space-y-4">
-        <button className="text-left">Home</button>
-        <button className="text-left">Popular</button>
-        <h2 className="my-2 font-bold">Communities</h2>
-        <button className="text-left">Group1</button>
-        <button className="text-left">Group2</button>
-      </div>
-      <div className="w-full flex flex-col">
+    <div className="flex flex-col md:flex-row text-white md:px-0 max-w-screen-lg mx-auto md:space-x-10 text-sm mt-6">
+      <div className="w-2/3 flex flex-col">
         <input
           type="text"
           className="px-5 py-2 rounded-lg bg-[#3a3a3a] w-full focus:outline-none"
           placeholder="Create a post"
         />
       </div>
-      <div className="w-full flex items-center justify-center">
-        <div className="flex mx-auto w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 pb-5 border border-[#707070]">
+      <div className="w-1/3 flex justify-end items-end">
+        <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 pb-5 border border-[#707070]">
           <img
             className="object-cover h-[80px] rounded-t-lg"
             src="https://png.pngtree.com/background/20210717/original/pngtree-elegant-clear-abstract-cosmic-wallpaper-background-picture-image_1434205.jpg"

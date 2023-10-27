@@ -1,11 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Model from "../UI/model";
 import React from "react";
 
-const LoginScreen = ({ onBackdropClick }) => {
+const LoginScreen = ({ onBackdropClick, onSignUp }) => {
   function handleDialogClick(event) {
     event.stopPropagation();
   }
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
+  const navigate = useNavigate();
+
+  const onSignupClick = () => {
+    onSignUp();
+    navigate(redirect ? `signup?redirect=${redirect}` : "/");
+  };
 
   return (
     <>
@@ -15,7 +26,7 @@ const LoginScreen = ({ onBackdropClick }) => {
         }}
       >
         <form
-          className="max-w-sm p-5 rounded-lg bg-[#292929] text-white space-y-3 text-sm"
+          className="max-w-md p-5 rounded-lg bg-[#292929] text-white space-y-3 text-sm"
           onClick={handleDialogClick}
         >
           <h2 className="text-xl font-bold">Login</h2>
@@ -34,7 +45,9 @@ const LoginScreen = ({ onBackdropClick }) => {
           </button>
           <div className="pt-5 flex flex-row space-x-2">
             <p>Dont have an account?</p>
-            <Link className="text-[#d35400]">Sign up</Link>
+            <button className="text-[#d35400]" onClick={onSignupClick}>
+              Sign up
+            </button>
           </div>
         </form>
       </Model>

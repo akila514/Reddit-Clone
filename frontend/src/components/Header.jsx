@@ -18,8 +18,15 @@ const Navbar = () => {
 
   return (
     <>
-      {isLoginOpen && <LoginScreen onBackdropClick={backdropClickHandler} />}
-      <nav className="bg-[#1A1A1B] w-full py-1 px-5 text-[#D7DADC] flex flex-row justify-between items-center overflow-x-hidden">
+      {isLoginOpen && (
+        <LoginScreen
+          onBackdropClick={backdropClickHandler}
+          onSignUp={() => {
+            setInLoginOpen(false);
+          }}
+        />
+      )}
+      <nav className="bg-[#1A1A1B] w-full py-1 px-5 border-b border-[#575757] text-[#D7DADC] flex flex-row justify-between items-center overflow-x-hidden">
         <div className="flex flex-row space-x-2">
           {/* Logo */}
           <img
