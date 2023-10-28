@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaUser, FaBars, FaPlus, FaChevronDown } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import logo from "../assets/reddit.png";
-import { Link } from "react-router-dom";
 import LoginScreen from "../screens/LoginScreen";
 import { useSelector } from "react-redux";
 
@@ -62,24 +61,27 @@ const Navbar = () => {
           <FaBars className="text-[16px] flex md:hidden" />
           {/* My Profile Dropdown */}
           {/* Consider using a library for better dropdown experience */}
-          <div
-            onClick={onLoginClickHandler}
-            className="hidden md:flex border justify-between border-[#1A1A1B] hover:border-[#666666] duration-200 hover:cursor-pointer md:w-[150px] rounded-md py-1 px-3 flex-row space-x-2"
-          >
-            {!userInfo && (
+
+          {!userInfo && (
+            <div
+              onClick={onLoginClickHandler}
+              className="hidden md:flex border justify-between border-[#1A1A1B] hover:border-[#666666] duration-200 hover:cursor-pointer md:w-[150px] rounded-md py-1 px-3 flex-row space-x-2"
+            >
               <div className="flex flex-row">
                 <FaUser className="flex my-auto mr-2" size={20} />
                 <p className="text-[16px] mt-1">Login</p>
               </div>
-            )}
-            {userInfo && (
+            </div>
+          )}
+          {userInfo && (
+            <div className="hidden md:flex border justify-between border-[#1A1A1B] hover:border-[#666666] duration-200 hover:cursor-pointer md:w-[150px] rounded-md py-1 px-3 flex-row space-x-2">
               <div className="flex flex-row">
                 <FaUser className="flex my-auto mr-2" size={20} />
                 <p className="text-[16px] mt-1">{userInfo.userName}</p>
               </div>
-            )}
-            <FaChevronDown className="text-[16px] flex my-auto" />
-          </div>
+            </div>
+          )}
+          <FaChevronDown className="text-[16px] flex my-auto" />
         </div>
       </nav>
     </>
