@@ -21,7 +21,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding-bottom: 50px;
-  background-color: #000000;
+  background-color: #0f0f0f;
 }
 
 p,
@@ -32,4 +32,3 @@ h3,
 h4 {
   color: #e9e9e9;
 }
-

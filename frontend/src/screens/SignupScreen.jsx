@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../store/userSlice";
+import { useDispatch } from "react-redux";
+import { authActoins } from "../store/authSlice";
 
 const SignupScreen = () => {
   const { search } = useLocation();
@@ -16,12 +18,16 @@ const SignupScreen = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const submitHandler = async (event) => {
     event.preventDefault();
 
     if (password == confirmPassword) {
       try {
         const user = await login({ userName, email, password }).unwrap();
+        dispatch(authActoins.setCredentials({ userName, email }));
+
         navigate("/");
       } catch (error) {
         console.log(error);
