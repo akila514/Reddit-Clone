@@ -66,7 +66,7 @@ const joinCommunity = asyncHandler(async (req, res, next) => {
     const users = community.users || [];
     community.users = [
       ...users,
-      { _id: req.user._id, userName: req.user.name },
+      { _id: req.user._id, userName: req.user.userName },
     ];
 
     await user.save();
@@ -78,9 +78,33 @@ const joinCommunity = asyncHandler(async (req, res, next) => {
   }
 });
 
+const isJoined = asyncHandler(async (req, res, next) => {
+  const communityId = req.params.id;
+  const userName = req.query.userName;
+
+  console.log(communityId, userName);
+
+  if (communityId && userName) {
+    const community = await Community.findById(communityId);
+
+    if (community) {
+      const isAvailable = community.users.some(
+        (user) => user.userName === userName
+      );
+
+      res.json({ isAvailable });
+    } else {
+      res.status(404).json({ message: "Community not found." });
+    }
+  } else {
+    res.status(404).json({ message: "Community ID or username not found." });
+  }
+});
+
 export {
   createCommunity,
   getSearchedCommunities,
   getCommunityById,
   joinCommunity,
+  isJoined,
 };

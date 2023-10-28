@@ -31,6 +31,12 @@ const communitySlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+
+    isJoined: builder.query({
+      query: ({ id, userName }) => ({
+        url: `${COMMUNITIES_URL}/${id}/isjoined?userName=${userName}`,
+      }),
+    }),
   }),
 });
 
@@ -39,4 +45,5 @@ export const {
   useCreateCommunityMutation,
   useGetCommunityByIdQuery,
   useJoinCommunityMutation,
+  useIsJoinedQuery,
 } = communitySlice;
