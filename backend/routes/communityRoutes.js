@@ -14,6 +14,6 @@ communityRouter.route("/create").post(createCommunity);
 communityRouter.route("/findByName").post(getSearchedCommunities);
 communityRouter.route("/:id").get(getCommunityById);
 communityRouter.route("/:id/join").post(protect, joinCommunity);
-communityRouter.route("/:id/isjoined").get(protect, isJoined);
+communityRouter.route("/:id/isjoined").get(isJoined);
 
 export default communityRouter;

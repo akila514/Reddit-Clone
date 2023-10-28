@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaReddit, FaBell } from "react-icons/fa";
 import {
@@ -7,6 +7,7 @@ import {
   useJoinCommunityMutation,
 } from "../store/communitySlice";
 import { useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const CommunityComponent = () => {
   const { id } = useParams();
@@ -22,28 +23,32 @@ const CommunityComponent = () => {
   const [joinCommunity, { isLoading: loadingJoin, isError: errorJoin }] =
     useJoinCommunityMutation();
 
+  const userName = userInfo?.userName || "guest";
+
   const {
     data: availability,
     isLoading: loadingAvailability,
     isError: errorAvailability,
-  } = useIsJoinedQuery({ userName: userInfo.userName, id });
+    refetch: refetchAvailability,
+  } = useIsJoinedQuery({ userName, id });
 
   const joinCommunityHandler = async () => {
     await joinCommunity(id);
     refetch();
+    refetchAvailability();
   };
 
-  if (isLoading || loadingAvailability) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError || errorAvailability) {
+  if (isError) {
     return <div>Error occurred while fetching data.</div>;
   }
 
   return (
     <>
-      {!loadingAvailability && (
+      {
         <div className="w-full">
           <div className="w-full">
             <img
@@ -59,7 +64,17 @@ const CommunityComponent = () => {
                     <p className="text-white flex my-auto text-2xl font-bold">
                       {community.name}
                     </p>
-                    {!availability.isAvailable && (
+                    {loadingAvailability && (
+                      <button className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4">
+                        <ClipLoader
+                          loading={true}
+                          size={150}
+                          aria-label="Loading Spinner"
+                          data-testid="loader"
+                        />
+                      </button>
+                    )}
+                    {!availability?.isAvailable && (
                       <button
                         onClick={joinCommunityHandler}
                         className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4"
@@ -67,8 +82,11 @@ const CommunityComponent = () => {
                         Join
                       </button>
                     )}
-                    {availability.isAvailable && (
-                      <button className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4">
+                    {availability?.isAvailable && (
+                      <button
+                        disabled
+                        className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4"
+                      >
                         Joined
                       </button>
                     )}
@@ -106,7 +124,7 @@ const CommunityComponent = () => {
             </div>
           </div>
         </div>
-      )}
+      }
     </>
   );
 };
