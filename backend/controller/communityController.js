@@ -43,4 +43,16 @@ const getSearchedCommunities = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { createCommunity, getSearchedCommunities };
+const getCommunityById = async (req, res, next) => {
+  const id = req.params.id;
+
+  const community = await Community.findById(id);
+
+  if (community) {
+    res.status(200).json(community);
+  } else {
+    res.status(404).json({ message: "Community not found." });
+  }
+};
+
+export { createCommunity, getSearchedCommunities, getCommunityById };

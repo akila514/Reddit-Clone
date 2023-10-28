@@ -18,8 +18,17 @@ const communitySlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getCommunityById: builder.query({
+      query: (eventId) => ({
+        url: `${COMMUNITIES_URL}/${eventId}`,
+      }),
+    }),
   }),
 });
 
-export const { useFindByNameMutation, useCreateCommunityMutation } =
-  communitySlice;
+export const {
+  useFindByNameMutation,
+  useCreateCommunityMutation,
+  useGetCommunityByIdQuery,
+} = communitySlice;
