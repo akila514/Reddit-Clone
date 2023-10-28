@@ -45,8 +45,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
 const getAllJoinedCommunities = asyncHandler(async (req, res, next) => {
   const joinedCommunities = req.user.communities;
 
-  console.log(joinedCommunities);
-
   if (joinedCommunities) {
     res.status(200).json(joinedCommunities);
   }

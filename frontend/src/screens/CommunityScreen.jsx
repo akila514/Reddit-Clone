@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaReddit, FaBell } from "react-icons/fa";
 import {
@@ -72,7 +72,8 @@ const CommunityComponent = () => {
                       <button className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4">
                         <ClipLoader
                           loading={true}
-                          size={150}
+                          color="white"
+                          size={20}
                           aria-label="Loading Spinner"
                           data-testid="loader"
                         />
