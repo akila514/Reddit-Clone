@@ -25,4 +25,16 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { registerUser };
+const loginUser = asyncHandler(async (req, res, next) => {
+  const { userName, password } = req.body;
+
+  const availableUser = await User.findOne({ userName });
+
+  if (availableUser && password === availableUser.password) {
+    res.json({ userName: availableUser.userName, email: availableUser.email });
+  } else {
+    res.json({ message: "This user do not exist." });
+  }
+});
+
+export { registerUser, loginUser };
