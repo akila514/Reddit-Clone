@@ -116,7 +116,7 @@ const Navbar = () => {
             <div className="absolute left-0 right-0 text-white max-w-lg flex flex-col mx-auto text-left p-2 rounded-b-lg bg-[#252525] space-y-3">
               {filteredCommunities.map((community, index) => (
                 <div
-                  className="border-b px-5 py-2 border-[#3b3b3b] flex flex-row justify-between"
+                  className="border-b px-5 py-2 border-[#3b3b3b] flex flex-row justify-between text-sm"
                   key={index}
                 >
                   <p> {community.name}</p>

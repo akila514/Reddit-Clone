@@ -10,7 +10,16 @@ const communitySlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    createCommunity: builder.mutation({
+      query: (data) => ({
+        url: `${COMMUNITIES_URL}/create`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useFindByNameMutation } = communitySlice;
+export const { useFindByNameMutation, useCreateCommunityMutation } =
+  communitySlice;
