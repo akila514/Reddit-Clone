@@ -5,16 +5,19 @@ import logo from "../assets/reddit.png";
 import LoginScreen from "../screens/LoginScreen";
 import { useSelector } from "react-redux";
 import { useFindByNameMutation } from "../store/communitySlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoginOpen, setInLoginOpen] = useState(false);
   const [searchedText, setSearchedText] = useState("");
   const [filteredCommunities, setFilteredCommunities] = useState([]);
 
+  const navigate = useNavigate();
+
   const [findByName, { isLoading, isError }] = useFindByNameMutation();
 
   useEffect(() => {
-    console.log(searchedText);
     const searchInput = async () => {
       if (searchedText !== "") {
         const foundList = await findByName({ searchedText });
@@ -40,6 +43,12 @@ const Navbar = () => {
   const onSearchHandler = (e) => {
     console.log(e.target.value);
     setSearchedText(e.target.value);
+  };
+
+  const onCommunityClickHandler = (community) => {
+    setSearchedText(community.name);
+    setIsSearchOpen(false);
+    navigate(`/communities/${community._id}`);
   };
 
   return (
@@ -76,6 +85,10 @@ const Navbar = () => {
             </div>
           </div>
           <input
+            value={searchedText}
+            onClick={() => {
+              setIsSearchOpen(true);
+            }}
             className="hidden md:flex flex-grow h-9 px-5 ml-5 focus:outline-none bg-[#2e2e2e] border border-[#5c5c5c] rounded-3xl"
             placeholder="Search Reddit"
             onChange={onSearchHandler}
@@ -110,12 +123,16 @@ const Navbar = () => {
             <FaChevronDown className="text-[16px] flex my-auto" />
           </div>
         </nav>
-        {filteredCommunities.length > 0 &&
+        {isSearchOpen &&
+          filteredCommunities.length > 0 &&
           searchedText !== "" &&
           searchedText !== null && (
             <div className="absolute left-0 right-0 text-white max-w-lg flex flex-col mx-auto text-left p-2 rounded-b-lg bg-[#252525] space-y-3">
               {filteredCommunities.map((community, index) => (
-                <div
+                <button
+                  onClick={() => {
+                    onCommunityClickHandler(community);
+                  }}
                   className="border-b px-5 py-2 border-[#3b3b3b] flex flex-row justify-between text-sm"
                   key={index}
                 >
@@ -123,7 +140,7 @@ const Navbar = () => {
                   <p className="text-xs text-[#777777] flex my-auto">
                     community
                   </p>
-                </div>
+                </button>
               ))}
             </div>
           )}
