@@ -1,5 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import { User } from "../models/User.js";
+import createToken from "../util/createToken.js";
 
 const registerUser = asyncHandler(async (req, res, next) => {
   const { userName, email, password } = req.body;
@@ -18,6 +19,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
     });
 
     if (user) {
+      createToken(res, user._id);
+
       res.status(201).json({ userName, email });
     } else {
       res.status(400).json({ message: "Something went wrong" });
@@ -31,6 +34,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
   const availableUser = await User.findOne({ userName });
 
   if (availableUser && password === availableUser.password) {
+    createToken(res, availableUser._id);
+
     res.json({ userName: availableUser.userName, email: availableUser.email });
   } else {
     res.json({ message: "This user do not exist." });
