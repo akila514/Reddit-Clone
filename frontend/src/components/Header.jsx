@@ -8,18 +8,23 @@ import { useFindByNameMutation } from "../store/communitySlice";
 
 const Navbar = () => {
   const [isLoginOpen, setInLoginOpen] = useState(false);
-  const [searchedText, setSearchedText] = useState();
+  const [searchedText, setSearchedText] = useState("");
   const [filteredCommunities, setFilteredCommunities] = useState([]);
 
   const [findByName, { isLoading, isError }] = useFindByNameMutation();
 
   useEffect(() => {
-    const searchInput = async (searchedText) => {
-      const foundList = await findByName({ searchedText });
-      setFilteredCommunities(foundList);
+    console.log(searchedText);
+    const searchInput = async () => {
+      if (searchedText !== "") {
+        const foundList = await findByName({ searchedText });
+        setFilteredCommunities(foundList.data);
+      } else {
+        setFilteredCommunities([]);
+      }
     };
 
-    searchInput(searchedText);
+    searchInput();
   }, [searchedText]);
 
   const userInfo = useSelector((state) => state.auth.userInfo);
@@ -33,6 +38,7 @@ const Navbar = () => {
   };
 
   const onSearchHandler = (e) => {
+    console.log(e.target.value);
     setSearchedText(e.target.value);
   };
 
@@ -46,7 +52,7 @@ const Navbar = () => {
           }}
         />
       )}
-      <>
+      <div className="relative">
         <nav className="bg-[#1A1A1B] w-full py-1 px-5 border-b border-[#575757] text-[#D7DADC] flex flex-row justify-between items-center overflow-x-hidden">
           <div className="flex flex-row space-x-2">
             {/* Logo */}
@@ -104,13 +110,24 @@ const Navbar = () => {
             <FaChevronDown className="text-[16px] flex my-auto" />
           </div>
         </nav>
-        <div>
-          {filteredCommunities.length > 0 &&
-            filteredCommunities.map((c) => {
-              return <div>{c.name}</div>;
-            })}
-        </div>
-      </>
+        {filteredCommunities.length > 0 &&
+          searchedText !== "" &&
+          searchedText !== null && (
+            <div className="absolute left-0 right-0 text-white max-w-lg flex flex-col mx-auto text-left p-2 rounded-b-lg bg-[#252525] space-y-3">
+              {filteredCommunities.map((community, index) => (
+                <div
+                  className="border-b px-5 py-2 border-[#3b3b3b] flex flex-row justify-between"
+                  key={index}
+                >
+                  <p> {community.name}</p>
+                  <p className="text-xs text-[#777777] flex my-auto">
+                    community
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+      </div>
     </>
   );
 };
