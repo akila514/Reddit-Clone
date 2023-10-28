@@ -60,19 +60,27 @@ const joinCommunity = asyncHandler(async (req, res, next) => {
   const user = req.user;
 
   if (community && user) {
-    const communities = user.communities || [];
-    user.communities = [...communities, community];
+    const alreadyJoined = await user.communities.some(
+      (c) => c._id === community._id
+    );
 
-    const users = community.users || [];
-    community.users = [
-      ...users,
-      { _id: req.user._id, userName: req.user.userName },
-    ];
+    if (alreadyJoined) {
+      res.status(400).json({ message: "Already joined." });
+    } else {
+      const communities = user.communities || [];
+      user.communities = [...communities, community];
 
-    await user.save();
-    await community.save();
+      const users = community.users || [];
+      community.users = [
+        ...users,
+        { _id: req.user._id, userName: req.user.userName },
+      ];
 
-    res.status(200).json({ message: "Community joined successfully" });
+      await user.save();
+      await community.save();
+
+      res.status(200).json({ message: "Community joined successfully" });
+    }
   } else {
     res.status(404).json({ message: "Somthing went wrong." });
   }
@@ -81,8 +89,6 @@ const joinCommunity = asyncHandler(async (req, res, next) => {
 const isJoined = asyncHandler(async (req, res, next) => {
   const communityId = req.params.id;
   const userName = req.query.userName;
-
-  console.log(communityId, userName);
 
   if (communityId && userName) {
     const community = await Community.findById(communityId);

@@ -33,6 +33,10 @@ const CommunityComponent = () => {
   } = useIsJoinedQuery({ userName, id });
 
   const joinCommunityHandler = async () => {
+    if (!userInfo) {
+      return;
+    }
+
     await joinCommunity(id);
     refetch();
     refetchAvailability();
@@ -112,13 +116,18 @@ const CommunityComponent = () => {
                     </p>
                     <p className="px-4 text-[#adadad] text-sm">members</p>
                   </div>
-                  <hr className="border-[#707070] py-2" />
-                  <Link
-                    to={`/communities/${community.name}/submit`}
-                    className="bg-[#eeeeee] text-center rounded-2xl text-gray-800 font-bold py-1 mx-3 text-sm"
-                  >
-                    Create a Post
-                  </Link>
+
+                  {userInfo && (
+                    <>
+                      <hr className="border-[#707070] py-2" />
+                      <Link
+                        to={`/communities/${community._id}/submit`}
+                        className="bg-[#eeeeee] text-center rounded-2xl text-gray-800 font-bold py-1 mx-3 text-sm"
+                      >
+                        Create a Post
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

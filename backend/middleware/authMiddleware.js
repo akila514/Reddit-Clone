@@ -11,7 +11,6 @@ const protect = asyncHandler(async (req, res, next) => {
       const user = await User.findById(decode.userId).select("-password");
       if (user) {
         req.user = user;
-        console.log(req.user);
         next();
       } else {
         res.status(401).json({ message: "User not found" });

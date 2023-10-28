@@ -24,10 +24,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/signup" element={<SignupScreen />} />
       <Route path="/communities/:id" element={<CommunityScreen />} />
-      <Route
-        path="/communities/:eventId/submit"
-        element={<CreateNewPostScreen />}
-      />
+      <Route path="/communities/:id/submit" element={<CreateNewPostScreen />} />
     </Route>
   )
 );

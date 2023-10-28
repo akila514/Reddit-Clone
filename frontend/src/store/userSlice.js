@@ -18,7 +18,17 @@ const userSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getJoinedCommunities: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/getallcommunities`,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation } = userSlice;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useGetJoinedCommunitiesQuery,
+} = userSlice;
