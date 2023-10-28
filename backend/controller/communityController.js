@@ -30,14 +30,12 @@ const getSearchedCommunities = asyncHandler(async (req, res, next) => {
 
   if (searchedText !== "" || searchedText !== null) {
     try {
-      // Use regular expression to perform a case-insensitive search on the 'name' field
       const availableList = await Community.find({
         name: { $regex: new RegExp(searchedText, "i") },
       });
 
       res.json(availableList);
     } catch (error) {
-      // Handle any potential errors here
       next(error);
     }
   } else {
