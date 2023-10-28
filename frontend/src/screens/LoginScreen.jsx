@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Model from "../UI/model";
 import React, { useState } from "react";
 import { useLoginUserMutation } from "../store/userSlice";
@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux";
 import { authActoins } from "../store/authSlice";
 
 const LoginScreen = ({ onBackdropClick }) => {
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -19,12 +23,17 @@ const LoginScreen = ({ onBackdropClick }) => {
     event.stopPropagation();
   }
 
-  const onLoginClickHandler = async () => {
+  const onLoginClickHandler = async (event) => {
+    event.preventDefault();
+
     console.log(userName, password);
     const user = await loginUser({ userName, password }).unwrap();
-    dispatch(authActoins.setCredentials({ ...user }));
     console.log(user);
-    navigate("/");
+    if (user) {
+      dispatch(authActoins.setCredentials({ ...user }));
+
+      onBackdropClick();
+    }
   };
 
   const onSignupHandler = () => {
@@ -40,6 +49,7 @@ const LoginScreen = ({ onBackdropClick }) => {
         }}
       >
         <form
+          onSubmit={onLoginClickHandler}
           className="max-w-sm p-5 rounded-lg bg-[#292929] text-white space-y-3 text-sm"
           onClick={handleDialogClick}
         >
@@ -61,14 +71,18 @@ const LoginScreen = ({ onBackdropClick }) => {
             }}
           />
           <button
-            onClick={onLoginClickHandler}
+            type="submit"
             className="w-full rounded-lg border px-3 py-1 bg-[#5a5a5a] border-[#8d8d8d]"
           >
             Login
           </button>
           <div className="pt-5 flex flex-row space-x-2">
             <p>Dont have an account?</p>
-            <button onClick={onSignupHandler} className="text-[#d35400]">
+            <button
+              type="button"
+              onClick={onSignupHandler}
+              className="text-[#d35400]"
+            >
               Sign up
             </button>
           </div>

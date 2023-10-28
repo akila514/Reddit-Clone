@@ -28,7 +28,7 @@ const SignupScreen = () => {
         const user = await login({ userName, email, password }).unwrap();
         dispatch(authActoins.setCredentials({ userName, email }));
 
-        navigate("/");
+        navigate(redirect);
       } catch (error) {
         console.log(error);
       }
