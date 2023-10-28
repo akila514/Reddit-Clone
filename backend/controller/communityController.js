@@ -25,4 +25,20 @@ const createCommunity = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { createCommunity };
+const getSearchedCommunities = asyncHandler(async (req, res, next) => {
+  const { searchedText } = req.body;
+
+  try {
+    // Use regular expression to perform a case-insensitive search on the 'name' field
+    const availableList = await Community.find({
+      name: { $regex: new RegExp(searchedText, "i") },
+    });
+
+    res.json(availableList);
+  } catch (error) {
+    // Handle any potential errors here
+    next(error);
+  }
+});
+
+export { createCommunity, getSearchedCommunities };
