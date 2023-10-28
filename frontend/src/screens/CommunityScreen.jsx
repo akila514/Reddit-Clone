@@ -1,11 +1,30 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaReddit, FaBell } from "react-icons/fa";
-import { useGetCommunityByIdQuery } from "../store/communitySlice";
+import {
+  useGetCommunityByIdQuery,
+  useJoinCommunityMutation,
+} from "../store/communitySlice";
+import { useSelector } from "react-redux";
 
 const CommunityComponent = () => {
   const { id } = useParams();
-  const { data: community, isLoading, isError } = useGetCommunityByIdQuery(id);
+  const {
+    data: community,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetCommunityByIdQuery(id);
+
+  const userInfo = useSelector((state) => state.auth.userInfo);
+
+  const [joinCommunity, { isLoading: loadingJoin, isError: errorJoin }] =
+    useJoinCommunityMutation();
+
+  const joinCommunityHandler = async () => {
+    await joinCommunity(id);
+    refetch();
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,17 +47,20 @@ const CommunityComponent = () => {
             <FaReddit size={50} />
             <div className="flex flex-col">
               <div className="flex flex-row">
-                <p className="text-white flex my-auto text-2xl">
+                <p className="text-white flex my-auto text-2xl font-bold">
                   {community.name}
                 </p>
-                <button className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4">
+                <button
+                  onClick={joinCommunityHandler}
+                  className="w-full rounded-3xl border px-10 py-1 bg-[#5a5a5a] border-[#8d8d8d] ml-10 mr-4"
+                >
                   Join
                 </button>
                 <button className="border rounded-full p-2">
                   <FaBell size={15} />
                 </button>
               </div>
-              <p className="text-xs">r/{community.name}</p>
+              <p className="text-xs text-[#b8b8b8]">r/{community.name}</p>
             </div>
           </div>
         </div>
@@ -46,10 +68,12 @@ const CommunityComponent = () => {
           <div className="w-2/3">posts</div>
           <div className="w-1/3">
             <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 py-5 border border-[#707070]">
-              <h2 className="text-[#adadad] px-4">About Community</h2>
+              <h2 className="text-[#adadad] px-4 text-sm">About Community</h2>
               <h2 className="px-4">{community.description}</h2>
               <div className="flex flex-col">
-                <p className="px-4 text-lg">{community.users.length}</p>
+                <p className="px-4 text-lg font-bold">
+                  {community.users.length}
+                </p>
                 <p className="px-4 text-[#adadad] text-sm">members</p>
               </div>
               <hr className="border-[#707070] py-2" />

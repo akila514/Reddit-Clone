@@ -55,4 +55,32 @@ const getCommunityById = async (req, res, next) => {
   }
 };
 
-export { createCommunity, getSearchedCommunities, getCommunityById };
+const joinCommunity = asyncHandler(async (req, res, next) => {
+  const community = await Community.findById(req.params.id);
+  const user = req.user;
+
+  if (community && user) {
+    const communities = user.communities || [];
+    user.communities = [...communities, community];
+
+    const users = community.users || [];
+    community.users = [
+      ...users,
+      { _id: req.user._id, userName: req.user.name },
+    ];
+
+    await user.save();
+    await community.save();
+
+    res.status(200).json({ message: "Community joined successfully" });
+  } else {
+    res.status(404).json({ message: "Somthing went wrong." });
+  }
+});
+
+export {
+  createCommunity,
+  getSearchedCommunities,
+  getCommunityById,
+  joinCommunity,
+};

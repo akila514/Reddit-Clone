@@ -24,6 +24,13 @@ const communitySlice = apiSlice.injectEndpoints({
         url: `${COMMUNITIES_URL}/${eventId}`,
       }),
     }),
+
+    joinCommunity: builder.mutation({
+      query: (communityId) => ({
+        url: `${COMMUNITIES_URL}/${communityId}/join`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -31,4 +38,5 @@ export const {
   useFindByNameMutation,
   useCreateCommunityMutation,
   useGetCommunityByIdQuery,
+  useJoinCommunityMutation,
 } = communitySlice;
