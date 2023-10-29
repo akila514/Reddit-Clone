@@ -41,6 +41,11 @@ const postSchema = mongoose.Schema({
     required: true,
   },
 
+  votedBy: {
+    type: Array,
+    required: true,
+  },
+
   comments: { type: Array, required: true },
 });
 
