@@ -59,19 +59,19 @@ const upVotePost = asyncHandler(async (req, res, next) => {
   if (post !== null && postIndexInCommunity !== -1) {
     const votedByList = post.votedBy;
     const voteOfThisUser = votedByList.find((voteDetail) =>
-      voteDetail.user._id.equals(req.user._id)
+      voteDetail.userId.equals(req.user._id)
     );
 
     console.log(postIndexInUser);
 
     if (voteOfThisUser) {
-      const { user, vote } = voteOfThisUser;
+      const { userId, vote } = voteOfThisUser;
 
       if (vote === "upvote") {
         voteOfThisUser.vote = null;
 
         post.votedBy = votedByList.filter(
-          (v) => !v.user._id.equals(req.user._id)
+          (v) => !v.userId.equals(req.user._id)
         );
 
         post.upVotes = post.upVotes - 1;
@@ -103,7 +103,7 @@ const upVotePost = asyncHandler(async (req, res, next) => {
       }
     } else {
       post.upVotes = post.upVotes + 1;
-      post.votedBy = [...votedByList, { user: req.user, vote: "upvote" }];
+      post.votedBy = [...votedByList, { userId: userId, vote: "upvote" }];
       community.posts[postIndexInCommunity] = post;
 
       if (postIndexInUser !== -1) {
