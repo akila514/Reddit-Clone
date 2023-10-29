@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/routes.js";
 import communityRouter from "./routes/communityRoutes.js";
 import cookieParser from "cookie-parser";
+import postRouter from "./routes/postRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,5 +24,6 @@ app.get("/", (req, res, next) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/communities", communityRouter);
+app.use("/api/posts", postRouter);
 
 app.listen(port);

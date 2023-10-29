@@ -1,13 +1,23 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
-  community: {
+  communityId: {
     type: String,
     required: true,
   },
 
-  user: {
+  userId: {
     type: String,
+    required: true,
+  },
+
+  userName: {
+    type: String,
+    required: true,
+  },
+
+  createdAt: {
+    type: Date,
     required: true,
   },
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaReddit, FaBell } from "react-icons/fa";
 import {
@@ -8,6 +8,7 @@ import {
 } from "../store/communitySlice";
 import { useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
+import PostTile from "../components/PostTile";
 
 const CommunityComponent = () => {
   const { id } = useParams();
@@ -31,6 +32,10 @@ const CommunityComponent = () => {
     isError: errorAvailability,
     refetch: refetchAvailability,
   } = useIsJoinedQuery({ userName, id });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const joinCommunityHandler = async () => {
     if (!userInfo) {
@@ -104,7 +109,15 @@ const CommunityComponent = () => {
               </div>
             </div>
             <div className="max-w-xl md:min-w-[1000px] flex mx-auto flex-row space-x-5 text-white mt-5">
-              <div className="w-2/3">posts</div>
+              <div className="w-2/3">
+                {community.posts.map((post) => {
+                  return (
+                    <div key={post._id}>
+                      <PostTile post={post} />
+                    </div>
+                  );
+                })}
+              </div>
               <div className="w-1/3">
                 <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 py-5 border border-[#707070]">
                   <h2 className="text-[#adadad] px-4 text-sm">
