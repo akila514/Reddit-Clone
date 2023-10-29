@@ -46,10 +46,10 @@ const upVotePost = asyncHandler(async (req, res, next) => {
 
   const post = await Post.findById(id);
 
-  // const userId = req.user._id;
-  // const user = await User.findById(userId);
-  // const postInUser = user.posts.find((post) => post._id == id);
+  const userId = req.user._id;
+  const user = await User.findById(userId);
 
+  const postIndexInUser = user.posts.findIndex((p) => p._id.equals(post._id));
   const community = await Community.findById(communityId);
 
   const postIndexInCommunity = community.posts.findIndex((p) =>
@@ -62,7 +62,7 @@ const upVotePost = asyncHandler(async (req, res, next) => {
       voteDetail.user._id.equals(req.user._id)
     );
 
-    console.log(voteOfThisUser);
+    console.log(postIndexInUser);
 
     if (voteOfThisUser) {
       const { user, vote } = voteOfThisUser;
@@ -76,27 +76,44 @@ const upVotePost = asyncHandler(async (req, res, next) => {
 
         post.upVotes = post.upVotes - 1;
         community.posts[postIndexInCommunity] = post;
+
+        if (postIndexInUser !== -1) {
+          user.posts[postIndexInUser] = post;
+        }
       }
 
       if (vote === "downvote") {
         voteOfThisUser = { user, vote: "upvote" };
         post.upVotes = post.upVotes + 1;
         community.posts[postIndexInCommunity] = post;
+
+        if (postIndexInUser !== -1) {
+          user.posts[postIndexInUser] = post;
+        }
       }
 
       if (vote === null) {
         voteOfThisUser = { user, vote: "upvote" };
         post.upVotes = post.upVotes + 1;
         community.posts[postIndexInCommunity] = post;
+
+        if (postIndexInUser !== -1) {
+          user.posts[postIndexInUser] = post;
+        }
       }
     } else {
       post.upVotes = post.upVotes + 1;
-      community.posts[postIndexInCommunity] = post;
       post.votedBy = [...votedByList, { user: req.user, vote: "upvote" }];
+      community.posts[postIndexInCommunity] = post;
+
+      if (postIndexInUser !== -1) {
+        user.posts[postIndexInUser] = post;
+      }
     }
 
     await post.save();
     await community.save();
+    await user.save();
 
     res.status(200).json(post);
   } else {
