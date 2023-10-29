@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
+import { useUpvotePostMutation } from "../store/postSlice";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const PostTile = ({ post }) => {
-  const onUpVoteHandler = () => {};
+  const [upvotePost, { isLoading, isError }] = useUpvotePostMutation();
+
+  const [votes, setVotes] = useState(post.upVotes - post.downVotes);
+
+  const onUpVoteHandler = async () => {
+    try {
+      const obj = await upvotePost({
+        communityId: post.communityId,
+        postId: post._id,
+      });
+
+      setVotes(obj.data.upVotes - obj.data.downVotes);
+    } catch (error) {
+      console.log("Something went wrong.");
+    }
+  };
 
   const onDownVoteHandler = () => {};
 
@@ -10,11 +27,23 @@ const PostTile = ({ post }) => {
     <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3">
       <div className="flex flex-col py-1 px-2 bg-[#252525] rounded-l-lg">
         <TiArrowSortedUp
-          onClick={onUpVoteHandler}
+          onClick={!isLoading ? onUpVoteHandler : () => {}}
           size={30}
-          className="text-[#969696]"
+          className="text-[#969696] hover:cursor-pointer"
         />
-        <p className="flex mx-auto">{post.upVotes - post.downVotes}</p>
+        <p className="flex mx-auto">
+          {isLoading ? (
+            <ClipLoader
+              loading={true}
+              color="white"
+              size={20}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            votes
+          )}
+        </p>
         <TiArrowSortedDown
           onClick={onDownVoteHandler}
           size={30}
