@@ -25,25 +25,13 @@ const PostTile = ({ post }) => {
 
   return (
     <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3">
-      <div className="flex flex-col py-1 px-2 bg-[#252525] rounded-l-lg">
+      <div className="flex flex-col px-2 bg-[#252525] rounded-l-lg">
         <TiArrowSortedUp
           onClick={!isLoading ? onUpVoteHandler : () => {}}
           size={30}
           className="text-[#969696] hover:cursor-pointer"
         />
-        <p className="flex mx-auto">
-          {isLoading ? (
-            <ClipLoader
-              loading={true}
-              color="white"
-              size={20}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          ) : (
-            votes
-          )}
-        </p>
+        <p className="flex mx-auto text-lg">{votes}</p>
         <TiArrowSortedDown
           onClick={onDownVoteHandler}
           size={30}

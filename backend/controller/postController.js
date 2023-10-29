@@ -62,8 +62,6 @@ const upVotePost = asyncHandler(async (req, res, next) => {
       voteDetail.userId.equals(req.user._id)
     );
 
-    console.log(postIndexInUser);
-
     if (voteOfThisUser) {
       const { userId, vote } = voteOfThisUser;
 
