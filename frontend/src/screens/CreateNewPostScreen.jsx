@@ -21,12 +21,12 @@ const CreateNewPostScreen = () => {
   ] = useCreatePostMutation();
 
   const [selectedCommunity, setSelectedCommunity] = useState(
-    community ? community.name : "Select"
+    community ? community._id : "Select"
   );
 
   useEffect(() => {
     if (community) {
-      setSelectedCommunity(community.name);
+      setSelectedCommunity(community._id);
     }
   }, [community]);
 
@@ -42,7 +42,7 @@ const CreateNewPostScreen = () => {
       console.log(selectedCommunity, title, description);
       try {
         const response = await createPost({
-          communityId: community._id,
+          communityId: selectedCommunity,
           title,
           description,
         });
@@ -82,7 +82,7 @@ const CreateNewPostScreen = () => {
           {communities &&
             !isLoading &&
             communities.map((c) => (
-              <option key={c._id} value={c.name}>
+              <option key={c._id} value={c._id}>
                 {c.name}
               </option>
             ))}
