@@ -30,6 +30,18 @@ const postSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+
+  upVotes: {
+    type: Number,
+    required: true,
+  },
+
+  downVotes: {
+    type: Number,
+    required: true,
+  },
+
+  comments: { type: Array, required: true },
 });
 
 export const Post = mongoose.model("Post", postSchema);

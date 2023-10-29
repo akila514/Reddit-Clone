@@ -17,6 +17,9 @@ const createPost = asyncHandler(async (req, res, next) => {
       createdAt: Date.now(),
       title,
       description,
+      upVotes: 0,
+      downVotes: 0,
+      comments: [],
     });
 
     try {
