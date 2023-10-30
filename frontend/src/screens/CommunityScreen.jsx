@@ -69,8 +69,8 @@ const CommunityComponent = () => {
               <div className="max-w-xl md:min-w-[1000px] flex mx-auto flex-row space-x-5">
                 <FaReddit size={50} />
                 <div className="flex flex-col">
-                  <div className="flex flex-row">
-                    <p className="text-white flex my-auto text-2xl font-bold">
+                  <div className="flex flex-row items-center">
+                    <p className="text-white flex my-auto text-2xl font-bold whitespace-nowrap">
                       {community.name}
                     </p>
                     {loadingAvailability && (

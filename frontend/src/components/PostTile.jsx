@@ -50,7 +50,7 @@ const PostTile = ({ post }) => {
         <TiArrowSortedDown
           onClick={onDownVoteHandler}
           size={30}
-          className="text-[#969696]"
+          className="text-[#969696] hover:cursor-pointer"
         />
       </div>
       <div className="flex flex-col text-white ml-4 w-full">
