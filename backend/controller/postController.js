@@ -40,6 +40,17 @@ const createPost = asyncHandler(async (req, res, next) => {
   }
 });
 
+const findPostById = asyncHandler(async (req, res, next) => {
+  const postId = req.params.id;
+
+  console.log(postId);
+
+  try {
+    const post = await Post.findById(postId);
+    res.status(200).json(post);
+  } catch (error) {}
+});
+
 const upVotePost = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const { communityId } = req.body;
@@ -152,4 +163,4 @@ const downVotePost = asyncHandler(async (req, res, next) => {
   res.status(200).json(post);
 });
 
-export { createPost, upVotePost, downVotePost };
+export { createPost, upVotePost, downVotePost, findPostById };

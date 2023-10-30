@@ -5,6 +5,8 @@ import {
   useUpvotePostMutation,
 } from "../store/postSlice";
 import ClipLoader from "react-spinners/ClipLoader";
+import { FaComment } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const PostTile = ({ post }) => {
   const [upvotePost, { isLoading, isError }] = useUpvotePostMutation();
@@ -39,7 +41,10 @@ const PostTile = ({ post }) => {
   };
 
   return (
-    <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3">
+    <Link
+      to={`/communities/${post.communityId}/posts/${post._id}`}
+      className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3 hover:cursor-pointer hover:border-[#a3a3a3] duration-100"
+    >
       <div className="flex flex-col px-2 bg-[#252525] rounded-l-lg">
         <TiArrowSortedUp
           onClick={!isLoading ? onUpVoteHandler : () => {}}
@@ -57,16 +62,22 @@ const PostTile = ({ post }) => {
         <div className="flex flex-row justify-between pr-4">
           <p className="text-xs text-[#bdbdbd]">
             posted by
-            <span className=" px-4 py-1 bg-[#5b81ff] rounded-lg ml-2 text-black">
-              {post.userName}
-            </span>
+            <span className="ml-1">{post.userName}</span>
           </p>
           <p className="text-xs text-[#bdbdbd]">at {post.createdAt}</p>
         </div>
         <p className="font-bold mt-2 text-lg">{post.title}</p>
-        <p className="text-sm py-2 my-2 rounded-lg">{post.description}</p>
+        <p className="text-sm py-2 my-2 rounded-lg text-[#c2c2c2]">
+          {post.description}
+        </p>
+        <button className="text-xs text-[#bebebe] font-bold text-left mb-2">
+          <div className="flex flex-row">
+            <FaComment className="flex my-auto mr-1" /> {post.comments.length}
+            <p className="ml-1">Comments</p>
+          </div>
+        </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

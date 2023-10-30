@@ -126,7 +126,7 @@ const CommunityComponent = () => {
                 })}
               </div>
               <div className="w-1/3">
-                <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 py-5 border border-[#707070]">
+                <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col space-y-3 py-5 border border-[#707070]">
                   <h2 className="text-[#adadad] px-4 text-sm">
                     About Community
                   </h2>
@@ -150,7 +150,7 @@ const CommunityComponent = () => {
                     </>
                   )}
                 </div>
-                <div className="mt-5 flex justify-end w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 pt-5 border border-[#707070]">
+                <div className="mt-5 flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col space-y-3 pt-5 border border-[#707070]">
                   <h2 className="text-[#adadad] px-4 text-sm">Members</h2>
                   <hr className="border-[#707070] pt-2" />
                   <div className="flex flex-col space-y-2">
@@ -161,7 +161,7 @@ const CommunityComponent = () => {
                             size={20}
                             className="flex my-auto text-[#a7a7a7]"
                           />
-                          <p className="text-sm">{user.userName}</p>
+                          <p className="text-sm font-bold">{user.userName}</p>
                         </div>
                         <hr className="border-[#353535] py-2" />
                       </>
