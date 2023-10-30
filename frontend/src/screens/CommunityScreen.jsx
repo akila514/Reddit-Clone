@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { FaReddit, FaBell } from "react-icons/fa";
+import {
+  FaReddit,
+  FaBell,
+  FaUser,
+  FaUserAlt,
+  FaUserAstronaut,
+  FaUserCircle,
+} from "react-icons/fa";
 import {
   useGetCommunityByIdQuery,
   useIsJoinedQuery,
@@ -142,6 +149,24 @@ const CommunityComponent = () => {
                       </Link>
                     </>
                   )}
+                </div>
+                <div className="mt-5 flex justify-end w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-3 pt-5 border border-[#707070]">
+                  <h2 className="text-[#adadad] px-4 text-sm">Members</h2>
+                  <hr className="border-[#707070] pt-2" />
+                  <div className="flex flex-col space-y-2">
+                    {community.users.map((user) => (
+                      <>
+                        <div className="flex flex-row px-6 space-x-4">
+                          <FaUserCircle
+                            size={20}
+                            className="flex my-auto text-[#a7a7a7]"
+                          />
+                          <p className="text-sm">{user.userName}</p>
+                        </div>
+                        <hr className="border-[#353535] py-2" />
+                      </>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
