@@ -58,7 +58,7 @@ const upVotePost = asyncHandler(async (req, res, next) => {
 
   if (post !== null && postIndexInCommunity !== -1) {
     const votedByList = post.votedBy;
-    const voteOfThisUser = votedByList.find((voteDetail) =>
+    let voteOfThisUser = votedByList.find((voteDetail) =>
       voteDetail.userId.equals(req.user._id)
     );
 
@@ -119,6 +119,64 @@ const upVotePost = asyncHandler(async (req, res, next) => {
   }
 });
 
-const downVotePost = asyncHandler(async (req, res, next) => {});
+const downVotePost = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const { communityId } = req.body;
+
+  const post = await Post.findById(id);
+
+  const community = await Community.findById(communityId);
+
+  let userVote = post.votedBy.find((v) => v.userId.equals(req.user._id));
+
+  const userVoteIndex = post.votedBy.findIndex((v) =>
+    v.userId.equals(req.user._id)
+  );
+
+  console.log(userVote);
+
+  if (userVote && userVoteIndex != -1) {
+    const tempVote = userVote.vote;
+
+    if (tempVote == "upvote") {
+      console.log("here3");
+      userVote.vote = "downvote";
+      post.downVotes++;
+
+      if (post.upVotes > 0) {
+        post.upVotes--;
+      }
+    }
+
+    if (tempVote == "downvote") {
+      console.log("here1");
+      userVote.vote = "none";
+      post.votedBy[userVoteIndex] = userVote;
+      post.downVotes--;
+    }
+
+    if (tempVote == "none") {
+      console.log("here2");
+      userVote.vote = "downvote";
+      post.votedBy[userVoteIndex] = userVote;
+      post.downVotes++;
+    }
+  } else {
+    userVote = { userId: req.user._id, vote: "downvote" };
+    post.downVotes++;
+    post.votedBy.push(userVote);
+  }
+
+  const postIndexInCommunity = community.posts.findIndex((c) =>
+    c._id.equals(id)
+  );
+
+  community.posts[postIndexInCommunity] = post;
+
+  await post.save();
+  await community.save();
+
+  res.status(200).json(post);
+});
 
 export { createPost, upVotePost, downVotePost };

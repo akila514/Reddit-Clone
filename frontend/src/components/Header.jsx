@@ -124,6 +124,7 @@ const Navbar = () => {
           </div>
         </nav>
         {isSearchOpen &&
+          filteredCommunities &&
           filteredCommunities.length > 0 &&
           searchedText !== "" &&
           searchedText !== null && (

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
-import { useUpvotePostMutation } from "../store/postSlice";
+import {
+  useDownvotePostMutation,
+  useUpvotePostMutation,
+} from "../store/postSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const PostTile = ({ post }) => {
   const [upvotePost, { isLoading, isError }] = useUpvotePostMutation();
+  const [downvotePost] = useDownvotePostMutation();
 
   const [votes, setVotes] = useState(post.upVotes - post.downVotes);
 
@@ -21,7 +25,18 @@ const PostTile = ({ post }) => {
     }
   };
 
-  const onDownVoteHandler = () => {};
+  const onDownVoteHandler = async () => {
+    try {
+      const obj = await downvotePost({
+        communityId: post.communityId,
+        postId: post._id,
+      });
+
+      setVotes(obj.data.upVotes - obj.data.downVotes);
+    } catch (error) {
+      console.log("Something went wrong.");
+    }
+  };
 
   return (
     <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3">

@@ -18,7 +18,19 @@ const postSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    downvotePost: builder.mutation({
+      query: (data) => ({
+        url: `${POSTS_URL}/${data.postId}/downvote`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useCreatePostMutation, useUpvotePostMutation } = postSlice;
+export const {
+  useCreatePostMutation,
+  useUpvotePostMutation,
+  useDownvotePostMutation,
+} = postSlice;
