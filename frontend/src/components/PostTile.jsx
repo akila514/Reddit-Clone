@@ -41,7 +41,7 @@ const PostTile = ({ post }) => {
   };
 
   return (
-    <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3 hover:cursor-pointer hover:border-[#a3a3a3] duration-100">
+    <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3 hover:border-[#a3a3a3] duration-100">
       <div className="flex flex-col px-2 bg-[#252525] rounded-l-lg">
         <TiArrowSortedUp
           onClick={!isLoading ? onUpVoteHandler : () => {}}
@@ -57,7 +57,7 @@ const PostTile = ({ post }) => {
       </div>
       <Link
         to={`/communities/${post.communityId}/posts/${post._id}`}
-        className="flex flex-col text-white ml-4 w-full"
+        className="flex flex-col text-white ml-4 w-full hover:cursor-pointer"
       >
         <div className="flex flex-row justify-between pr-4">
           <p className="text-xs text-[#bdbdbd]">

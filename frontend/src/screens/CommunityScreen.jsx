@@ -177,7 +177,7 @@ const CommunityComponent = () => {
                           )}
                           <p className="text-md pb-1">{user.userName}</p>
                         </div>
-                        <hr className="border-[#353535] py-1" />
+                        <hr className="border-[#353535] py-1 my-1" />
                       </div>
                     ))}
                   </div>
