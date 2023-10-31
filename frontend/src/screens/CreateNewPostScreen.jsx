@@ -3,9 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetJoinedCommunitiesQuery } from "../store/userSlice";
 import { useGetCommunityByIdQuery } from "../store/communitySlice";
 import { useCreatePostMutation } from "../store/postSlice";
+import { uploadImage } from "../util/uploadImage";
 
 const CreateNewPostScreen = () => {
   const { id } = useParams();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const { data: community } = useGetCommunityByIdQuery(id);
 
@@ -35,16 +37,27 @@ const CreateNewPostScreen = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const handleChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
+
   const postSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("first");
+
+    let downloadURL;
+
+    if (selectedImage) {
+      downloadURL = await uploadImage(selectedImage);
+    }
+
     if (selectedCommunity && title !== "" && description !== "") {
-      console.log(selectedCommunity, title, description);
+      console.log(selectedCommunity, title, description, downloadURL);
       try {
         const response = await createPost({
           communityId: selectedCommunity,
           title,
           description,
+          postImg: downloadURL || null,
         });
         if (response.error) {
           console.error(response.error);
@@ -96,6 +109,7 @@ const CreateNewPostScreen = () => {
             setTitle(e.target.value);
           }}
         />
+
         <input
           type="text"
           className="px-5 py-2 rounded-lg bg-[#3a3a3a] w-full focus:outline-none"
@@ -103,6 +117,15 @@ const CreateNewPostScreen = () => {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
+        />
+
+        <p className="text-center font-bold">Select Image</p>
+        <input
+          onChange={handleChange}
+          id="image"
+          type="file"
+          className="bg-[#1a1a1a] p-2 rounded flex mx-auto"
+          placeholder="Select image from storage"
         />
         <button
           type="submit"

@@ -35,12 +35,16 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
   const availableUser = await User.findOne({ userName });
 
-  if (availableUser && password === availableUser.password) {
+  if (availableUser && (await availableUser.matchPasswords(password))) {
     createToken(res, availableUser._id);
 
-    res.json({ userName: availableUser.userName, email: availableUser.email });
+    res.json({
+      userName: availableUser.userName,
+      email: availableUser.email,
+      profilePic: availableUser.profilePic,
+    });
   } else {
-    res.json({ message: "This user do not exist." });
+    res.status(404).json({ message: "This user do not exist.", isError: true });
   }
 });
 

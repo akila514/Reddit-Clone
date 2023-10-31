@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = mongoose.Schema({
   profilePic: { type: String },
@@ -8,5 +9,9 @@ const userSchema = mongoose.Schema({
   posts: { type: Array, required: true },
   communities: { type: Array, required: true },
 });
+
+userSchema.methods.matchPasswords = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 export const User = mongoose.model("User", userSchema);

@@ -31,6 +31,10 @@ const postSchema = mongoose.Schema({
     required: true,
   },
 
+  postImg: {
+    type: String,
+  },
+
   upVotes: {
     type: Number,
     required: true,

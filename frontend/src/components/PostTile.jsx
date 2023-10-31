@@ -70,7 +70,13 @@ const PostTile = ({ post }) => {
         <p className="text-sm py-2 my-2 rounded-lg text-[#c2c2c2]">
           {post.description}
         </p>
-        <button className="text-xs text-[#bebebe] font-bold text-left mb-2">
+        {post.postImg && (
+          <img
+            src={post.postImg}
+            className="object-cover h-[400px] w-full pr-4 mb-4"
+          />
+        )}
+        <button className="text-xs text-[#bebebe] font-bold text-left mb-4">
           <div className="flex flex-row">
             <FaComment className="flex my-auto mr-1" /> {post.comments.length}
             <p className="ml-1">Comments</p>

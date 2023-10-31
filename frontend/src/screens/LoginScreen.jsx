@@ -29,7 +29,7 @@ const LoginScreen = ({ onBackdropClick }) => {
 
     const user = await loginUser({ userName, password }).unwrap();
 
-    if (user) {
+    if (!user.isError) {
       dispatch(authActoins.setCredentials({ ...user }));
 
       onBackdropClick();

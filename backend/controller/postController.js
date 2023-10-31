@@ -4,7 +4,9 @@ import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
 
 const createPost = asyncHandler(async (req, res, next) => {
-  const { communityId, title, description } = req.body;
+  const { communityId, title, description, postImg } = req.body;
+
+  console.log(postImg);
 
   const community = await Community.findById(communityId);
   const user = await User.findById(req.user._id);
@@ -17,11 +19,14 @@ const createPost = asyncHandler(async (req, res, next) => {
       createdAt: Date.now(),
       title,
       description,
+      postImg,
       upVotes: 0,
       downVotes: 0,
       votedBy: [],
       comments: [],
     });
+
+    console.log(post);
 
     try {
       const userPosts = user.posts;

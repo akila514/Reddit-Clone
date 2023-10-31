@@ -72,7 +72,13 @@ const PostDetailsScreen = () => {
             </p>
             <h1 className="text-xl font-bold mt-4">{post.title}</h1>
             <p className="text-sm mt-8 text-[#c5c5c5]">{post.description}</p>
-            <button className="text-xs text-[#bebebe] font-bold text-left mb-2 mt-5">
+            {post.postImg && (
+              <img
+                src={post.postImg}
+                className="object-cover h-[400px] w-full my-4"
+              />
+            )}
+            <button className="text-xs text-[#bebebe] font-bold text-left mb-2 mt-4">
               <div className="flex flex-row">
                 <FaComment className="flex my-auto mr-1" />{" "}
                 {loadedComments.length}
