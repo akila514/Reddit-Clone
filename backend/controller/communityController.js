@@ -2,7 +2,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import { Community } from "../models/Community.js";
 
 const createCommunity = asyncHandler(async (req, res, next) => {
-  const { name, description, profileImage } = req.body;
+  const { name, description, profileImage, backgroundImage } = req.body;
 
   const sameCommunity = await Community.findOne({ name });
 
@@ -13,6 +13,7 @@ const createCommunity = asyncHandler(async (req, res, next) => {
       name,
       description,
       profileImage,
+      backgroundImage: backgroundImage || null,
       users: [],
       posts: [],
     });

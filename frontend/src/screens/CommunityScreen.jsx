@@ -69,12 +69,18 @@ const CommunityComponent = () => {
           <div className="w-full">
             <img
               className="object-cover w-full h-32"
-              src="https://cdn.shopify.com/s/files/1/0565/7080/6458/files/circles-abstract-wallpaper-mural-Living-room.jpg?v=1628738184"
+              src={community.backgroundImage}
               alt=""
             />
             <div className="w-full bg-[#222222] py-4 text-white">
               <div className="max-w-xl md:min-w-[1000px] flex mx-auto flex-row space-x-5">
-                <FaReddit size={50} />
+                {community.profileImage && (
+                  <img
+                    className="w-16 h-16 rounded-full object-cover"
+                    src={community.profileImage}
+                  />
+                )}
+                {!community.profileImage && <FaReddit size={50} />}
                 <div className="flex flex-col">
                   <div className="flex flex-row items-center">
                     <p className="text-white flex my-auto text-2xl font-bold whitespace-nowrap">
