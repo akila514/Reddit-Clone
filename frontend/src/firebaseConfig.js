@@ -8,13 +8,12 @@ import "firebase/compat/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDcrwEPaDeQ2ZDhgllaqXqZRp-KehILBls",
-  authDomain: "redditclone-d342a.firebaseapp.com",
-  projectId: "redditclone-d342a",
-  storageBucket: "redditclone-d342a.appspot.com",
-  messagingSenderId: "234280098200",
-  appId: "1:234280098200:web:0a8d88348bd3fd2a5fb3ed",
-  measurementId: "G-PRD26XQ168",
+  apiKey: "AIzaSyB97WdkkmTsYuqrrvrhAHamJVqAiQV0hz8",
+  authDomain: "redditclone-a94ad.firebaseapp.com",
+  projectId: "redditclone-a94ad",
+  storageBucket: "redditclone-a94ad.appspot.com",
+  messagingSenderId: "397922658355",
+  appId: "1:397922658355:web:731f779697c474447c1b46"
 };
 
 // Initialize Firebase

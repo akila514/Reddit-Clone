@@ -115,7 +115,10 @@ const Navbar = () => {
             {userInfo && (
               <div className="hidden md:flex border justify-between border-[#1A1A1B] hover:border-[#666666] duration-200 hover:cursor-pointer md:w-[150px] rounded-md py-1 px-3 flex-row space-x-2">
                 <div className="flex flex-row">
-                  <FaUser className="flex my-auto mr-2" size={20} />
+                  <img
+                    src={userInfo.profilePic}
+                    className="flex my-auto mr-2 rounded-full object-cover h-[30px] w-[30px]"
+                  />
                   <p className="text-[16px] mt-1">{userInfo.userName}</p>
                 </div>
               </div>

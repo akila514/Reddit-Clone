@@ -37,9 +37,15 @@ const SignupScreen = () => {
           userName,
           email,
           password,
-          profilePic: downloadURL,
+          profilePic: downloadURL || null,
         }).unwrap();
-        dispatch(authActoins.setCredentials({ userName, email }));
+        dispatch(
+          authActoins.setCredentials({
+            userName,
+            email,
+            profilePic: downloadURL || null,
+          })
+        );
 
         navigate(redirect);
       } catch (error) {

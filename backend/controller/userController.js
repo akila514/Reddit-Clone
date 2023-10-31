@@ -4,7 +4,7 @@ import createToken from "../util/createToken.js";
 import bcrypt from "bcryptjs";
 
 const registerUser = asyncHandler(async (req, res, next) => {
-  const { userName, email, password } = req.body;
+  const { userName, email, password, profilePic } = req.body;
 
   const sameUser = await User.findOne({ userName });
 
@@ -14,6 +14,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const user = await User.create({
       userName,
       email,
+      profilePic,
       password: bcrypt.hashSync(password),
       posts: [],
       communities: [],
