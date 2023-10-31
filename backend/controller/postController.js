@@ -43,8 +43,6 @@ const createPost = asyncHandler(async (req, res, next) => {
 const findPostById = asyncHandler(async (req, res, next) => {
   const postId = req.params.id;
 
-  console.log(postId);
-
   try {
     const post = await Post.findById(postId);
     res.status(200).json(post);
@@ -67,6 +65,8 @@ const postComment = asyncHandler(async (req, res, next) => {
 
   const owner = await User.findById(ownerId);
 
+  console.log(owner);
+
   const postIndexInOwnersPost = owner.posts.findIndex((p) =>
     p._id.equals(postId)
   );
@@ -79,13 +79,15 @@ const postComment = asyncHandler(async (req, res, next) => {
 
   post.comments.push(commentObj);
 
-  community.posts[postIndexInCommunityPosts].comments = post.comments;
+  community.posts[postIndexInCommunityPosts].comments.push(commentObj);
 
-  owner.posts[postIndexInOwnersPost].comments = post.comments;
+  owner.posts[postIndexInOwnersPost].comments.push(commentObj);
+
+  post.markModified("comments");
+  community.markModified("posts");
+  owner.markModified("posts");
 
   res.status(200).json(post);
-
-  console.log(commentObj);
 
   await community.save();
   await owner.save();
