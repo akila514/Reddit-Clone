@@ -60,6 +60,8 @@ const joinCommunity = asyncHandler(async (req, res, next) => {
   const community = await Community.findById(req.params.id);
   const user = req.user;
 
+  console.log(req.user);
+
   if (community && user) {
     const alreadyJoined = await user.communities.some(
       (c) => c._id === community._id
@@ -74,7 +76,11 @@ const joinCommunity = asyncHandler(async (req, res, next) => {
       const users = community.users || [];
       community.users = [
         ...users,
-        { _id: req.user._id, userName: req.user.userName },
+        {
+          _id: req.user._id,
+          userName: req.user.userName,
+          profilePic: req.user.profilePic,
+        },
       ];
 
       await user.save();

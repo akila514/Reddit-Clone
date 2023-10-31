@@ -68,7 +68,7 @@ const CommunityComponent = () => {
         <div className="w-full">
           <div className="w-full">
             <img
-              className="object-cover w-full h-32"
+              className="object-cover w-full h-40"
               src={community.backgroundImage}
               alt=""
             />
@@ -163,11 +163,19 @@ const CommunityComponent = () => {
                     {community.users.map((user) => (
                       <div key={user._id}>
                         <div className="flex flex-row px-6 space-x-4">
-                          <FaUserCircle
-                            size={20}
-                            className="flex my-auto text-[#a7a7a7]"
-                          />
-                          <p className="text-md">{user.userName}</p>
+                          {!user.profilePic && (
+                            <FaUserCircle
+                              size={20}
+                              className="flex my-auto text-[#a7a7a7]"
+                            />
+                          )}
+                          {user.profilePic && (
+                            <img
+                              src={user.profilePic}
+                              className="flex my-auto mr-2 rounded-full object-cover h-[30px] w-[30px]"
+                            />
+                          )}
+                          <p className="text-md pb-1">{user.userName}</p>
                         </div>
                         <hr className="border-[#353535] py-1" />
                       </div>
