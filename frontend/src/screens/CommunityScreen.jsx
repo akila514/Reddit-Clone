@@ -120,7 +120,7 @@ const CommunityComponent = () => {
                 {community.posts.map((post) => {
                   return (
                     <div key={post._id}>
-                      <PostTile post={post} />
+                      <PostTile post={post} postId={post._id} />
                     </div>
                   );
                 })}
@@ -150,21 +150,21 @@ const CommunityComponent = () => {
                     </>
                   )}
                 </div>
-                <div className="mt-5 flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col space-y-3 pt-5 border border-[#707070]">
+                <div className="mt-5 flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col space-y-1 pt-5 border border-[#707070]">
                   <h2 className="text-[#adadad] px-4 text-sm">Members</h2>
-                  <hr className="border-[#707070] pt-2" />
+                  <hr className="border-[#707070] py-2" />
                   <div className="flex flex-col space-y-2">
                     {community.users.map((user) => (
-                      <>
+                      <div key={user._id}>
                         <div className="flex flex-row px-6 space-x-4">
                           <FaUserCircle
                             size={20}
                             className="flex my-auto text-[#a7a7a7]"
                           />
-                          <p className="text-sm font-bold">{user.userName}</p>
+                          <p className="text-md">{user.userName}</p>
                         </div>
-                        <hr className="border-[#353535] py-2" />
-                      </>
+                        <hr className="border-[#353535] py-1" />
+                      </div>
                     ))}
                   </div>
                 </div>

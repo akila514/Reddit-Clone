@@ -51,6 +51,47 @@ const findPostById = asyncHandler(async (req, res, next) => {
   } catch (error) {}
 });
 
+const postComment = asyncHandler(async (req, res, next) => {
+  const { comment } = req.body;
+
+  const postId = req.params.id;
+  const post = await Post.findById(postId);
+
+  const community = await Community.findById(post.communityId);
+
+  const postIndexInCommunityPosts = community.posts.findIndex((p) =>
+    p._id.equals(postId)
+  );
+
+  const ownerId = post.userId;
+
+  const owner = await User.findById(ownerId);
+
+  const postIndexInOwnersPost = owner.posts.findIndex((p) =>
+    p._id.equals(postId)
+  );
+
+  const commentObj = {
+    userId: req.user._id,
+    userName: req.user.userName,
+    comment,
+  };
+
+  post.comments.push(commentObj);
+
+  community.posts[postIndexInCommunityPosts].comments = post.comments;
+
+  owner.posts[postIndexInOwnersPost].comments = post.comments;
+
+  res.status(200).json(post);
+
+  console.log(commentObj);
+
+  await community.save();
+  await owner.save();
+  await post.save();
+});
+
 const upVotePost = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const { communityId } = req.body;
@@ -163,4 +204,4 @@ const downVotePost = asyncHandler(async (req, res, next) => {
   res.status(200).json(post);
 });
 
-export { createPost, upVotePost, downVotePost, findPostById };
+export { createPost, upVotePost, downVotePost, findPostById, postComment };

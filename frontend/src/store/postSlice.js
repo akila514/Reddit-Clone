@@ -32,6 +32,14 @@ const postSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    postComment: builder.mutation({
+      query: (data) => ({
+        url: `${POSTS_URL}/${data.postId}/comments`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -40,4 +48,5 @@ export const {
   useUpvotePostMutation,
   useDownvotePostMutation,
   useGetPostByIdQuery,
+  usePostCommentMutation,
 } = postSlice;

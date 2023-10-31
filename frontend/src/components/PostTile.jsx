@@ -41,10 +41,7 @@ const PostTile = ({ post }) => {
   };
 
   return (
-    <Link
-      to={`/communities/${post.communityId}/posts/${post._id}`}
-      className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3 hover:cursor-pointer hover:border-[#a3a3a3] duration-100"
-    >
+    <div className="flex flex-row w-full rounded-md border border-[#424242] bg-[#2e2e2e] space-y-2 mb-3 hover:cursor-pointer hover:border-[#a3a3a3] duration-100">
       <div className="flex flex-col px-2 bg-[#252525] rounded-l-lg">
         <TiArrowSortedUp
           onClick={!isLoading ? onUpVoteHandler : () => {}}
@@ -58,7 +55,10 @@ const PostTile = ({ post }) => {
           className="text-[#969696] hover:cursor-pointer"
         />
       </div>
-      <div className="flex flex-col text-white ml-4 w-full">
+      <Link
+        to={`/communities/${post.communityId}/posts/${post._id}`}
+        className="flex flex-col text-white ml-4 w-full"
+      >
         <div className="flex flex-row justify-between pr-4">
           <p className="text-xs text-[#bdbdbd]">
             posted by
@@ -76,8 +76,8 @@ const PostTile = ({ post }) => {
             <p className="ml-1">Comments</p>
           </div>
         </button>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
