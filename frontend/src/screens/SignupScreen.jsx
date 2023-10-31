@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { authActoins } from "../store/authSlice";
+import { uploadImage } from "../util/uploadImage";
 
 const SignupScreen = () => {
   const { search } = useLocation();
@@ -10,6 +11,7 @@ const SignupScreen = () => {
   const redirect = sp.get("redirect") || "/";
 
   const [login, { isLoading, isError }] = useRegisterUserMutation();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,12 +22,23 @@ const SignupScreen = () => {
 
   const dispatch = useDispatch();
 
+  const handleChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
 
+    const downloadURL = await uploadImage(selectedImage);
+
     if (password == confirmPassword) {
       try {
-        const user = await login({ userName, email, password }).unwrap();
+        const user = await login({
+          userName,
+          email,
+          password,
+          profilePic: downloadURL,
+        }).unwrap();
         dispatch(authActoins.setCredentials({ userName, email }));
 
         navigate(redirect);
@@ -41,6 +54,14 @@ const SignupScreen = () => {
       className="max-w-xl flex mx-auto flex-col mt-10 p-5 rounded-lg bg-[#292929] text-white space-y-3 text-sm"
     >
       <h2 className="text-xl font-bold">Signup</h2>
+      <p className="text-center font-bold">Select Image</p>
+      <input
+        onChange={handleChange}
+        id="image"
+        type="file"
+        className="bg-[#1a1a1a] p-2 rounded flex mx-auto"
+        placeholder="Select image from storage"
+      />
       <input
         type="text"
         className="px-5 py-2 rounded-lg bg-[#3a3a3a] w-full focus:outline-none"

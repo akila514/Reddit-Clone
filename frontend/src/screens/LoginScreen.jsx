@@ -5,7 +5,6 @@ import { useLoginUserMutation } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { authActoins } from "../store/authSlice";
 import { FaUserCircle } from "react-icons/fa";
-import { uploadImage } from "../util/uploadImage";
 
 const LoginScreen = ({ onBackdropClick }) => {
   const { search } = useLocation();
@@ -14,17 +13,12 @@ const LoginScreen = ({ onBackdropClick }) => {
 
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
-
-  const handleChange = (event) => {
-    setSelectedImage(event.target.files[0]);
-  };
 
   function handleDialogClick(event) {
     event.stopPropagation();
@@ -33,9 +27,7 @@ const LoginScreen = ({ onBackdropClick }) => {
   const onLoginClickHandler = async (event) => {
     event.preventDefault();
 
-    const downloadURL = await uploadImage(selectedImage);
-
-    const user = await loginUser({ userName, password, downloadURL }).unwrap();
+    const user = await loginUser({ userName, password }).unwrap();
 
     if (user) {
       dispatch(authActoins.setCredentials({ ...user }));
@@ -65,14 +57,6 @@ const LoginScreen = ({ onBackdropClick }) => {
           <FaUserCircle
             className="flex my-5 mx-auto text-[#b4b4b4]"
             size={100}
-          />
-          <p className="text-center font-bold">Select Image</p>
-          <input
-            onChange={handleChange}
-            id="image"
-            type="file"
-            className="bg-[#1a1a1a] p-2 rounded flex mx-auto"
-            placeholder="Select image from storage"
           />
           <input
             type="text"

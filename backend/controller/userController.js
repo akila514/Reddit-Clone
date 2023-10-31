@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import { User } from "../models/User.js";
 import createToken from "../util/createToken.js";
+import bcrypt from "bcryptjs";
 
 const registerUser = asyncHandler(async (req, res, next) => {
   const { userName, email, password } = req.body;
@@ -13,7 +14,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     const user = await User.create({
       userName,
       email,
-      password,
+      password: bcrypt.hashSync(password),
       posts: [],
       communities: [],
     });
