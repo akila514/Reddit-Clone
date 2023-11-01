@@ -66,6 +66,14 @@ const HomeScreen = () => {
               <button className="bg-[#eeeeee] text-center rounded-2xl text-gray-800 font-bold py-1 mx-3 text-sm">
                 Create a Post
               </button>
+              <button
+                onClick={() => {
+                  setIsCreateCommunityOpen(true);
+                }}
+                className="bg-transparent border rounded-2xl font-bold py-1 px-3 mx-3 text-sm"
+              >
+                Create a Community
+              </button>
             </>
           </div>
         </div>
