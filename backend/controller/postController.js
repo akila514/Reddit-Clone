@@ -35,6 +35,9 @@ const createPost = asyncHandler(async (req, res, next) => {
       const communityPosts = community.posts;
       community.posts = [...communityPosts, post];
 
+      user.markModified("posts");
+      community.markModified("posts");
+
       await user.save();
       await community.save();
 

@@ -1,4 +1,5 @@
 import asyncHandler from "../middleware/asyncHandler.js";
+import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
 import createToken from "../util/createToken.js";
 import bcrypt from "bcryptjs";
@@ -56,4 +57,15 @@ const getAllJoinedCommunities = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { registerUser, loginUser, getAllJoinedCommunities };
+const getRecommendedPosts = asyncHandler(async (req, res, next) => {
+  const posts = await Post.find();
+
+  res.status(200).json(posts);
+});
+
+export {
+  registerUser,
+  loginUser,
+  getAllJoinedCommunities,
+  getRecommendedPosts,
+};

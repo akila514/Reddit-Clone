@@ -90,7 +90,7 @@ const CreateNewPostScreen = () => {
           }}
           value={selectedCommunity}
           id="dropdown"
-          className="bg-transparent w-[200px] border border-[#777777] p-2 rounded-md bg-[#272727] text-white focus:outline-none"
+          className="bg-transparent w-[200px] border border-[#777777] p-2 bg-[#272727] text-white focus:outline-none"
         >
           {communities &&
             !isLoading &&
@@ -119,12 +119,12 @@ const CreateNewPostScreen = () => {
           }}
         />
 
-        <p className="text-center font-bold">Select Image</p>
+        <p className="text-left font-bold">Select Image</p>
         <input
           onChange={handleChange}
           id="image"
           type="file"
-          className="bg-[#1a1a1a] p-2 rounded flex mx-auto"
+          className="bg-[#1a1a1a] p-2 rounded"
           placeholder="Select image from storage"
         />
         <button
