@@ -59,6 +59,7 @@ const getAllJoinedCommunities = asyncHandler(async (req, res, next) => {
 
 const getRecommendedPosts = asyncHandler(async (req, res, next) => {
   const posts = await Post.find();
+  posts.sort(() => Math.random() - 0.5);
 
   res.status(200).json(posts);
 });
