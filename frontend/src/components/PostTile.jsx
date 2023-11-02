@@ -73,7 +73,7 @@ const PostTile = ({ post }) => {
         {post.postImg && (
           <img
             src={post.postImg}
-            className="object-cover h-[400px] w-full pr-4 mb-4"
+            className="object-cover h-[350px] w-full pr-4 mb-4"
           />
         )}
         <button className="text-xs text-[#bebebe] font-bold text-left mb-4">

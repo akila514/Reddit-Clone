@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  FaReddit,
-  FaBell,
-  FaUserCircle,
-} from "react-icons/fa";
+import { FaReddit, FaBell, FaUserCircle } from "react-icons/fa";
 import {
   useGetCommunityByIdQuery,
   useIsJoinedQuery,
@@ -65,7 +61,7 @@ const CommunityComponent = () => {
         <div className="w-full">
           <div className="w-full">
             <img
-              className="object-cover w-full h-40"
+              className="object-cover w-full h-60"
               src={community.backgroundImage}
               alt=""
             />
