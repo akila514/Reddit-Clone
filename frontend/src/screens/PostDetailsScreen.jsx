@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetCommunityByIdQuery } from "../store/communitySlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   useGetPostByIdQuery,
   usePostCommentMutation,
@@ -60,15 +60,28 @@ const PostDetailsScreen = () => {
           <div className="w-2/3 flex flex-col bg-[#1f1f1f] p-5 rounded-lg h-full">
             <p className="flex flex-row space-x-1 text-xs text-[#8a8a8a]">
               <span>
-                <FaReddit
-                  className="flex my-auto text-[#eeeeee] mr-1"
-                  size={20}
-                />
+                {!community.profileImage && (
+                  <FaReddit
+                    className="flex my-auto text-[#eeeeee] mr-1"
+                    size={20}
+                  />
+                )}
+                {community.profileImage && (
+                  <img
+                    src={community.profileImage}
+                    className="flex my-auto mr-2 rounded-full object-cover h-[30px] w-[30px]"
+                  />
+                )}
               </span>
-              <span className="text-white font-bold flex my-auto pr-2">
+              <Link
+                to={`/communities/${post.communityId}`}
+                className="text-white font-bold flex my-auto pr-2"
+              >
                 {community.name}
-              </span>
-              posted by {post.userName} at {post.createdAt}
+              </Link>
+              <p className="flex my-auto">
+                posted by {post.userName} at {post.createdAt}
+              </p>
             </p>
             <h1 className="text-xl font-bold mt-4">{post.title}</h1>
             <p className="text-sm mt-8 text-[#c5c5c5]">{post.description}</p>
@@ -111,11 +124,19 @@ const PostDetailsScreen = () => {
               {loadedComments.map((c) => {
                 return (
                   <div
-                    className="flex flex-col mb-6"
+                    className="flex flex-col mb-6 bg-[#2e2e2e] rounded-lg p-2"
                     key={`${c.userId}${Math.random() * 10000}`}
                   >
                     <div className="flex flex-row">
-                      <FaUserCircle className="flex my-auto mr-2" size={20} />
+                      {!c.profilePic && (
+                        <FaUserCircle className="flex my-auto mr-2" size={20} />
+                      )}
+                      {c.profilePic && (
+                        <img
+                          src={c.profilePic}
+                          className="flex my-auto mr-2 rounded-full object-cover h-[30px] w-[30px]"
+                        />
+                      )}
                       <p className="text-sm text-[#c5c5c5] font-bold">
                         {c.userName}
                       </p>

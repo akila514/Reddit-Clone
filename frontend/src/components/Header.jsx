@@ -113,7 +113,10 @@ const Navbar = () => {
               </div>
             )}
             {userInfo && (
-              <div className="hidden md:flex border justify-between border-[#1A1A1B] hover:border-[#666666] duration-200 hover:cursor-pointer md:w-[150px] rounded-md py-1 px-3 flex-row space-x-2">
+              <Link
+                to={`/users/${userInfo.userName}`}
+                className="hidden md:flex border justify-between border-[#1A1A1B] hover:border-[#666666] duration-200 hover:cursor-pointer md:w-[150px] rounded-md py-1 px-3 flex-row space-x-2"
+              >
                 <div className="flex flex-row">
                   {!userInfo.profilePic && (
                     <FaUser className="flex my-auto mr-2" size={20} />
@@ -124,7 +127,7 @@ const Navbar = () => {
                   />
                   <p className="text-[16px] mt-1">{userInfo.userName}</p>
                 </div>
-              </div>
+              </Link>
             )}
             <FaChevronDown className="text-[16px] flex my-auto" />
           </div>

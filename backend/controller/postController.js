@@ -112,6 +112,8 @@ const upVotePost = asyncHandler(async (req, res, next) => {
 
   let userVote = post.votedBy.find((v) => v.userId.equals(req.user._id));
 
+  const postOwner = await User.findById(post.userId);
+
   const userVoteIndex = post.votedBy.findIndex((v) =>
     v.userId.equals(req.user._id)
   );
@@ -150,8 +152,14 @@ const upVotePost = asyncHandler(async (req, res, next) => {
     c._id.equals(id)
   );
 
-  community.posts[postIndexInCommunity] = post;
+  const postIndexInOwner = postOwner.posts.findIndex((p) => p._id.equals(id));
 
+  community.posts[postIndexInCommunity] = post;
+  postOwner.posts[postIndexInOwner] = post;
+
+  postOwner.markModified("posts");
+
+  await postOwner.save();
   await post.save();
   await community.save();
 

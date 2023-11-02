@@ -30,6 +30,18 @@ const userSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/getRecommendedPosts`,
       }),
     }),
+
+    getUserPosts: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/getUserInfo`,
+      }),
+    }),
+
+    getUserDetails: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/getUserDetails`,
+      }),
+    }),
   }),
 });
 
@@ -38,4 +50,5 @@ export const {
   useLoginUserMutation,
   useGetJoinedCommunitiesQuery,
   useGetRecommendedPostsQuery,
+  useGetUserPostsQuery,
 } = userSlice;

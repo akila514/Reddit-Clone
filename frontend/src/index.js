@@ -17,10 +17,12 @@ import store from "./store/store";
 import CommunityScreen from "./screens/CommunityScreen";
 import CreateNewPostScreen from "./screens/CreateNewPostScreen";
 import PostDetailsScreen from "./screens/PostDetailsScreen";
+import ProfilePage from "./screens/ProfilePage";
+import ErrorScreen from "./screens/ErrorScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route path="/" element={<App />} errorElement={<ErrorScreen />}>
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/signup" element={<SignupScreen />} />
@@ -29,6 +31,7 @@ const router = createBrowserRouter(
         path="/communities/:id/posts/:postid"
         element={<PostDetailsScreen />}
       />
+      <Route path="/users/:id" element={<ProfilePage />} />
       <Route path="/communities/:id/submit" element={<CreateNewPostScreen />} />
     </Route>
   )

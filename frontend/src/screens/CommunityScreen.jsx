@@ -3,9 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import {
   FaReddit,
   FaBell,
-  FaUser,
-  FaUserAlt,
-  FaUserAstronaut,
   FaUserCircle,
 } from "react-icons/fa";
 import {

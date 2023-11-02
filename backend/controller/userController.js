@@ -64,9 +64,18 @@ const getRecommendedPosts = asyncHandler(async (req, res, next) => {
   res.status(200).json(posts);
 });
 
+const getUserPosts = asyncHandler(async (req, res, info) => {
+  if (req.user) {
+    res.status(200).json(req.user.posts);
+  } else {
+    res.status(404).json({ message: "Not Authorized" });
+  }
+});
+
 export {
   registerUser,
   loginUser,
   getAllJoinedCommunities,
   getRecommendedPosts,
+  getUserPosts,
 };
