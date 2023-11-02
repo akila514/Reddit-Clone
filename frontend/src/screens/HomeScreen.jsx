@@ -32,8 +32,8 @@ const HomeScreen = () => {
       {isCreateCommunityOpen && (
         <CreateCommunityScreen onBackdropClick={backdropClickHandler} />
       )}
-      <div className="flex flex-col md:flex-row text-white md:px-0 max-w-screen-lg mx-auto md:space-x-10 text-sm mt-6">
-        <div className="w-2/3 flex flex-col">
+      <div className="flex flex-col md:flex-row text-white md:px-0 max-w-screen-lg mx-auto md:space-x-10 text-sm mt-6 px-5 md">
+        <div className="w-full md:w-2/3 flex flex-col">
           <input
             type="text"
             className="px-5 py-2 rounded-lg bg-[#3a3a3a] w-full focus:outline-none mb-10"
@@ -50,8 +50,8 @@ const HomeScreen = () => {
             </div>
           )}
         </div>
-        <div className="w-1/3">
-          <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col space-y-3 pb-5 border border-[#707070]">
+        <div className="w-1/3 hidden md:flex h-min">
+          <div className="flex  w-80 bg-[#1f1f1f] rounded-md flex-col space-y-3 pb-5 border border-[#707070]">
             <img
               className="object-cover h-[100px] rounded-t-md"
               src="https://png.pngtree.com/background/20210717/original/pngtree-elegant-clear-abstract-cosmic-wallpaper-background-picture-image_1434205.jpg"

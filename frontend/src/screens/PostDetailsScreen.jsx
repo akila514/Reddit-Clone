@@ -56,8 +56,8 @@ const PostDetailsScreen = () => {
   return (
     <>
       {community && post && loadedComments && (
-        <div className="flex flex-col md:flex-row text-white md:px-0 max-w-screen-lg mx-auto md:space-x-10 text-sm mt-6">
-          <div className="w-2/3 flex flex-col bg-[#1f1f1f] p-5 rounded-lg h-full">
+        <div className="flex flex-col md:flex-row text-white md:px-0 max-w-screen-lg mx-auto md:space-x-10 text-sm mt-6 px-5">
+          <div className="w-full md:w-2/3 flex flex-col bg-[#1f1f1f] p-5 rounded-lg h-full">
             <p className="flex flex-row space-x-1 text-xs text-[#8a8a8a]">
               <span>
                 {!community.profileImage && (
@@ -147,7 +147,7 @@ const PostDetailsScreen = () => {
               })}
             </div>
           </div>
-          <div className="w-1/3 flex">
+          <div className="w-1/3 hidden md:flex">
             <div className="flex py-5 w-80 bg-[#1f1f1f] rounded-lg flex-col space-y-1 pb-5 border border-[#707070] h-min">
               <p className="px-8 pb-2">{community.name}</p>
               <hr className="border-[#5f5f5f] pb-2" />

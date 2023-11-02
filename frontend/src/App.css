@@ -32,6 +32,10 @@ select {
   cursor: pointer;
 }
 
+option {
+  background-color: #363636;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
