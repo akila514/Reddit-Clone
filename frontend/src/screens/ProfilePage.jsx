@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetUserPostsQuery } from "../store/userSlice";
+import {
+  useGetUserDetailsQuery,
+  useGetUserPostsQuery,
+} from "../store/userSlice";
 import PostTile from "../components/PostTile";
 
 const ProfilePage = () => {
-  const [userPosts, setUserPosts] = useState([]);
-  const userInfo = useSelector((state) => state.auth.userInfo);
+  const [userDetails, setUserDetails] = useState(null);
 
-  const { data: posts, isLoading, isError, refetch } = useGetUserPostsQuery();
+  const {
+    data: userData,
+    isLoading: userDataIsLoading,
+    isError: userDataHasError,
+    refetch: refetchUserData,
+  } = useGetUserDetailsQuery();
 
   useEffect(() => {
-    if (userPosts && !isError && !isLoading) {
-      setUserPosts(posts);
+    if (userData && !userDataHasError && !userDataIsLoading) {
+      setUserDetails(userData);
     }
-  }, [posts]);
+  }, [userData]);
 
   return (
     <>
-      {userInfo && !isLoading && (
+      {userDetails && (
         <div className="flex flex-col md:flex-row text-white md:px-0 max-w-screen-lg mx-auto md:space-x-10 text-sm mt-6">
           <div className="w-2/3 flex flex-col">
             <input
@@ -25,35 +32,33 @@ const ProfilePage = () => {
               className="px-5 py-2 rounded-lg bg-[#3a3a3a] w-full focus:outline-none mb-10"
               placeholder="Create a post"
             />
-            {isLoading ? (
+            {userDataIsLoading ? (
               <p>Loading</p>
             ) : (
               <div className="flex flex-col">
-                {userPosts &&
-                  userPosts.map((post) => (
+                {userDetails.posts &&
+                  userDetails.posts.map((post) => (
                     <PostTile key={post._id} post={post} />
                   ))}
               </div>
             )}
           </div>
           <div className="w-1/3">
-            <div className="flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col space-y-3 pb-5 border border-[#707070]">
+            <div className="relative flex justify-end w-80 bg-[#1f1f1f] rounded-md flex-col pb-5 border border-[#707070]">
+              <div className="w-full h-[100px] bg-[#2D97E5]" />
               <img
-                className="object-cover h-[100px] rounded-t-md"
-                src="https://png.pngtree.com/background/20210717/original/pngtree-elegant-clear-abstract-cosmic-wallpaper-background-picture-image_1434205.jpg"
-                alt=""
+                src={userData.profilePic}
+                className="flex my-auto mr-2 rounded-full object-cover h-[60px] w-[60px] absolute top-14 left-2 border-2"
               />
-              <h2 className="text-[#adadad] px-4 text-sm">Home</h2>
-              <h2 className="px-4">
-                This is your homepage. Find your favourite posts.
+              <h2 className="font-bold px-4 mt-8">{userData.userName}</h2>
+              <h2 className="text-[#adadad] px-4 text-sm my-2">
+                r/{userData.userName}
               </h2>
+
               <>
                 <hr className="border-[#707070] py-2" />
                 <button className="bg-[#eeeeee] text-center rounded-2xl text-gray-800 font-bold py-1 mx-3 text-sm">
                   Create a Post
-                </button>
-                <button className="bg-transparent border rounded-2xl font-bold py-1 px-3 mx-3 text-sm">
-                  Create a Community
                 </button>
               </>
             </div>

@@ -72,10 +72,19 @@ const getUserPosts = asyncHandler(async (req, res, info) => {
   }
 });
 
+const getUserDetails = asyncHandler(async (req, res, info) => {
+  if (req.user) {
+    res.status(200).json(req.user);
+  } else {
+    res.status(404).json({ message: "Not Authorized" });
+  }
+});
+
 export {
   registerUser,
   loginUser,
   getAllJoinedCommunities,
   getRecommendedPosts,
   getUserPosts,
+  getUserDetails,
 };
